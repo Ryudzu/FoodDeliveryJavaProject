@@ -25,6 +25,9 @@
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
   </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/fd_dump.sql" connection-id="b8560a57-148f-42d2-afd7-cb71b38c397b" session-id="MAIN" current-schema="food_delivery" />
+  </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
     <execution-history>
