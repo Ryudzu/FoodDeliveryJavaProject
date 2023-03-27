@@ -37,7 +37,7 @@ public final class DatabaseConnection {
         try {
             connection.close();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException("Ошибка при закрытии подключения к базе данных.");
         }
     }
 }
