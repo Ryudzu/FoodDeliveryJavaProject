@@ -6,8 +6,6 @@ import com.jdbc.data.*;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public final class CRUDutils {
 
@@ -15,8 +13,8 @@ public final class CRUDutils {
 
     // Подключение к базе данных для осуществления запросов.
 
-    private static final Logger logger = Logger.getLogger(CRUDutils.class.getName());
     private static final Connection CONNECTION = DatabaseConnection.connect();
+    private static final String ERRORMESSAGE = "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!";
 
     // Метод showAll позволяет просмотреть все содержимое в конкретной таблице (SELECT * FROM).
 
@@ -30,12 +28,12 @@ public final class CRUDutils {
                 int id = result.getInt("id");
                 int amount = result.getInt("amount");
                 int productDataId = result.getInt("product_data_id");
-                int customerCartId = result.getInt("customer_data_id");
+                int customerCartId = result.getInt("customer_cart_id");
 
                 carts.add(new CartData(id, amount, productDataId, customerCartId));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return carts;
@@ -56,7 +54,7 @@ public final class CRUDutils {
                 couriers.add(new CourierData(id, courierPhone, firstname, lastname, vehicle));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return couriers;
@@ -70,12 +68,12 @@ public final class CRUDutils {
 
             while (result.next()) {
                 int id = result.getInt("id");
-                int customerDataIdId = result.getInt("customer_data_id");
+                int customerDataId = result.getInt("customer_data_id");
 
-                customerCarts.add(new CustomerCart(id, customerDataIdId));
+                customerCarts.add(new CustomerCart(id, customerDataId));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return customerCarts;
@@ -97,7 +95,7 @@ public final class CRUDutils {
                 customers.add(new CustomerData(id, customerPhone, email, password, username));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return customers;
@@ -123,7 +121,7 @@ public final class CRUDutils {
                 orders.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, time, total));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return orders;
@@ -143,7 +141,7 @@ public final class CRUDutils {
                 productsAndOrders.add(new ProductAndOrder(amountOrdered, orderDataId, productDataId));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return productsAndOrders;
@@ -163,7 +161,7 @@ public final class CRUDutils {
                 categories.add(new ProductCategoryData(id, categoryTitle, description));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return categories;
@@ -186,7 +184,7 @@ public final class CRUDutils {
                 products.add(new ProductData(id, imageLink, price, productCategoryId, productRating, productTitle));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return products;
@@ -206,7 +204,7 @@ public final class CRUDutils {
                 reviews.add(new ReviewData(id, comment, reviewData));
             }
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
         return reviews;
@@ -226,7 +224,7 @@ public final class CRUDutils {
             statement.setInt(3, cart.getCustomerCartId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -245,7 +243,7 @@ public final class CRUDutils {
             statement.setString(4, courier.getVehicle());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -257,7 +255,7 @@ public final class CRUDutils {
             statement.setInt(1, customerCart.getCustomerDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -275,7 +273,7 @@ public final class CRUDutils {
             statement.setString(4, customer.getUsername());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -299,7 +297,7 @@ public final class CRUDutils {
             statement.setDouble(7, order.getTotal());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -315,7 +313,7 @@ public final class CRUDutils {
             statement.setInt(3, productAndOrder.getProductDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -329,7 +327,7 @@ public final class CRUDutils {
             statement.setString(2, category.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -349,7 +347,7 @@ public final class CRUDutils {
             statement.setString(5, product.getProductTitle());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -363,7 +361,7 @@ public final class CRUDutils {
             statement.setInt(2, review.getReviewRating());
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -375,7 +373,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -385,7 +383,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -395,7 +393,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -405,7 +403,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -415,7 +413,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -425,7 +423,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -435,7 +433,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -445,7 +443,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -455,7 +453,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -465,7 +463,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -475,7 +473,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -485,7 +483,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -495,7 +493,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -505,7 +503,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -515,7 +513,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -525,7 +523,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -535,7 +533,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -545,7 +543,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -555,7 +553,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -565,7 +563,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -575,7 +573,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -585,7 +583,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -595,7 +593,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -605,7 +603,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -615,7 +613,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -625,7 +623,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -635,7 +633,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -645,7 +643,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -655,7 +653,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -665,7 +663,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -675,7 +673,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -686,7 +684,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -695,7 +693,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -704,7 +702,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -713,7 +711,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -722,7 +720,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -731,7 +729,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -740,7 +738,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -749,7 +747,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
@@ -758,7 +756,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
+            throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 }

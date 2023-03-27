@@ -12,7 +12,7 @@ public final class Update {
 
     private static final Logger logger = Logger.getLogger(Update.class.getName());
     private static final Scanner input = new Scanner(System.in);
-    private static final String errorMessage = "Такого выбора не существует в меню. Повторите попытку.";
+    private static final String ERRORMESSAGE = "Такого выбора не существует в меню. Повторите попытку.";
 
     public static void update() {
         logger.log(Level.INFO, """
@@ -108,7 +108,7 @@ public final class Update {
 
             updateReviewDataColumns(columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
 
@@ -131,7 +131,7 @@ public final class Update {
             int updatedProductDataId = input.nextInt();
             CRUDutils.updateCartDataProductDataId(updatedProductDataId, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -156,7 +156,7 @@ public final class Update {
             String updatedCourierVehicle = input.next();
             CRUDutils.updateCourierDataVehicle(updatedCourierVehicle, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -169,7 +169,7 @@ public final class Update {
             int updatedCustomerDataId = input.nextInt();
             CRUDutils.updateCustomerCartCustomerDataId(updatedCustomerDataId, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -194,7 +194,7 @@ public final class Update {
             String updatedCustomerUsername = input.next();
             CRUDutils.updateCustomerDataUsername(updatedCustomerUsername, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -231,7 +231,7 @@ public final class Update {
             double updatedOrderTotal = input.nextDouble();
             CRUDutils.updateOrderDataTotal(updatedOrderTotal, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -252,7 +252,7 @@ public final class Update {
             int updatedProductAndOrderProductId = input.nextInt();
             CRUDutils.updateProductAndOrderProductDataId(updatedProductAndOrderProductId, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -269,7 +269,7 @@ public final class Update {
             String updatedProductCategoryDescription = input.next();
             CRUDutils.updateProductCategoryDataDescription(updatedProductCategoryDescription, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -298,7 +298,7 @@ public final class Update {
             String updatedProductTitle = input.next();
             CRUDutils.updateProductDataProductTitle(updatedProductTitle, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -315,7 +315,7 @@ public final class Update {
             int updatedReviewRating = input.nextInt();
             CRUDutils.updateReviewDataReviewRating(updatedReviewRating, columnId);
         } else {
-            logger.log(Level.INFO, "{0}", errorMessage);
+            logger.log(Level.INFO, "{0}", ERRORMESSAGE);
             System.exit(0);
         }
     }

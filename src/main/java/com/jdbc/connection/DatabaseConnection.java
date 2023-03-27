@@ -1,33 +1,43 @@
 package com.jdbc.connection;
 
+import java.io.FileInputStream;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Properties;
 
 public final class DatabaseConnection {
 
     private DatabaseConnection() {}
 
-    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
-
-    private static final String USERNAME = "postgres";
-    private static final String PASSWORD = "rootroot";
-    private static final String URL = "jdbc:postgresql://localhost:5432/food_delivery";
-
     private static Connection connection = null;
 
     public static Connection connect() {
+        String username;
+        String password;
+        String url;
+
+        try {
+            FileInputStream fis = new FileInputStream("./src/main/resources/databaseprops.txt");
+            Properties props = new Properties();
+            props.load(fis);
+
+            username = props.getProperty("username");
+            password = props.getProperty("password");
+            url = props.getProperty("url");
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Системе не удалось найти указанное расположение файла или записать данные из файла.");
+        }
+
         try {
             Driver sqlDriver = new org.postgresql.Driver();
             DriverManager.registerDriver(sqlDriver);
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Драйвер не зарегистрирован.");
+            throw new IllegalArgumentException("Драйвер не зарегистрирован.");
         }
 
         try {
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(url, username, password);
         } catch (SQLException e) {
-            logger.log(Level.INFO, "Ошибка подключения к базе данных.");
+            throw new IllegalArgumentException("Ошибка подключения к базе данных.");
         }
 
         return connection;
