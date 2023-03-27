@@ -4,7 +4,9 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DatabaseConnection {
+public final class DatabaseConnection {
+
+    private DatabaseConnection() {}
 
     private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
@@ -12,9 +14,9 @@ public class DatabaseConnection {
     private static final String PASSWORD = "rootroot";
     private static final String URL = "jdbc:postgresql://localhost:5432/food_delivery";
 
-    public static Connection CONNECTION;
+    private static Connection connection = null;
 
-    public static Connection connect () {
+    public static Connection connect() {
         try {
             Driver sqlDriver = new org.postgresql.Driver();
             DriverManager.registerDriver(sqlDriver);
@@ -23,11 +25,19 @@ public class DatabaseConnection {
         }
 
         try {
-            CONNECTION = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             logger.log(Level.INFO, "Ошибка подключения к базе данных.");
         }
 
-        return CONNECTION;
+        return connection;
+    }
+
+    public static void closeConnect() {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -6,10 +6,13 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Update {
+public final class Update {
+
+    private Update() {}
 
     private static final Logger logger = Logger.getLogger(Update.class.getName());
     private static final Scanner input = new Scanner(System.in);
+    private static final String errorMessage = "Такого выбора не существует в меню. Повторите попытку.";
 
     public static void update() {
         logger.log(Level.INFO, """
@@ -105,7 +108,7 @@ public class Update {
 
             updateReviewDataColumns(columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
 
@@ -128,7 +131,7 @@ public class Update {
             int updatedProductDataId = input.nextInt();
             CRUDutils.updateCartDataProductDataId(updatedProductDataId, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -153,7 +156,7 @@ public class Update {
             String updatedCourierVehicle = input.next();
             CRUDutils.updateCourierDataVehicle(updatedCourierVehicle, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -166,7 +169,7 @@ public class Update {
             int updatedCustomerDataId = input.nextInt();
             CRUDutils.updateCustomerCartCustomerDataId(updatedCustomerDataId, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -191,7 +194,7 @@ public class Update {
             String updatedCustomerUsername = input.next();
             CRUDutils.updateCustomerDataUsername(updatedCustomerUsername, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -228,7 +231,7 @@ public class Update {
             double updatedOrderTotal = input.nextDouble();
             CRUDutils.updateOrderDataTotal(updatedOrderTotal, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -249,7 +252,7 @@ public class Update {
             int updatedProductAndOrderProductId = input.nextInt();
             CRUDutils.updateProductAndOrderProductDataId(updatedProductAndOrderProductId, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -266,7 +269,7 @@ public class Update {
             String updatedProductCategoryDescription = input.next();
             CRUDutils.updateProductCategoryDataDescription(updatedProductCategoryDescription, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -295,7 +298,7 @@ public class Update {
             String updatedProductTitle = input.next();
             CRUDutils.updateProductDataProductTitle(updatedProductTitle, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }
@@ -312,7 +315,7 @@ public class Update {
             int updatedReviewRating = input.nextInt();
             CRUDutils.updateReviewDataReviewRating(updatedReviewRating, columnId);
         } else {
-            logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "{0}", errorMessage);
             System.exit(0);
         }
     }

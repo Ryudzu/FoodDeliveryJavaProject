@@ -6,7 +6,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Insert {
+public final class Insert {
+
+    private Insert() {}
 
     private static final Logger logger = Logger.getLogger(Insert.class.getName());
     private static final Scanner input = new Scanner(System.in);

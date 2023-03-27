@@ -6,7 +6,6 @@ import com.jdbc.menu.Insert;
 import com.jdbc.menu.Select;
 import com.jdbc.menu.Update;
 
-import java.sql.SQLException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -17,17 +16,11 @@ public class App {
     private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        DatabaseConnection.connect();
         databaseMenu();
-        try {
-            logger.log(Level.INFO, "Закрываем подключение с базой данных...");
-            DatabaseConnection.CONNECTION.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public static void databaseMenu() {
+        DatabaseConnection.connect();
         boolean repeat = true;
 
         do {
@@ -56,5 +49,8 @@ public class App {
                 System.exit(0);
             }
         } while (repeat);
+
+        logger.log(Level.INFO, "Закрываем подключение с базой данных...");
+        DatabaseConnection.closeConnect();
     }
 }

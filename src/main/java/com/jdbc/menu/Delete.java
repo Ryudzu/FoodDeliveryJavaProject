@@ -6,7 +6,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Delete {
+public final class Delete {
+
+    private Delete() {}
 
     private static final Logger logger = Logger.getLogger(Delete.class.getName());
     private static final Scanner input = new Scanner(System.in);

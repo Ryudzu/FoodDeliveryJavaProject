@@ -8,7 +8,9 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Select {
+public final class Select {
+
+    private Select() {}
 
     private static final Logger logger = Logger.getLogger(Select.class.getName());
     private static final Scanner input = new Scanner(System.in);

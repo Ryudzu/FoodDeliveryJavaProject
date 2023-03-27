@@ -6,11 +6,16 @@ import com.jdbc.data.*;
 import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class CRUDutils {
+public final class CRUDutils {
+
+    private CRUDutils() {}
 
     // Подключение к базе данных для осуществления запросов.
 
+    private static final Logger logger = Logger.getLogger(CRUDutils.class.getName());
     private static final Connection CONNECTION = DatabaseConnection.connect();
 
     // Метод showAll позволяет просмотреть все содержимое в конкретной таблице (SELECT * FROM).
@@ -30,7 +35,7 @@ public class CRUDutils {
                 carts.add(new CartData(id, amount, productDataId, customerCartId));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return carts;
@@ -51,7 +56,7 @@ public class CRUDutils {
                 couriers.add(new CourierData(id, courierPhone, firstname, lastname, vehicle));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return couriers;
@@ -70,7 +75,7 @@ public class CRUDutils {
                 customerCarts.add(new CustomerCart(id, customerDataIdId));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return customerCarts;
@@ -92,7 +97,7 @@ public class CRUDutils {
                 customers.add(new CustomerData(id, customerPhone, email, password, username));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return customers;
@@ -118,7 +123,7 @@ public class CRUDutils {
                 orders.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, time, total));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return orders;
@@ -138,7 +143,7 @@ public class CRUDutils {
                 productsAndOrders.add(new ProductAndOrder(amountOrdered, orderDataId, productDataId));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return productsAndOrders;
@@ -158,7 +163,7 @@ public class CRUDutils {
                 categories.add(new ProductCategoryData(id, categoryTitle, description));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return categories;
@@ -181,7 +186,7 @@ public class CRUDutils {
                 products.add(new ProductData(id, imageLink, price, productCategoryId, productRating, productTitle));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return products;
@@ -201,7 +206,7 @@ public class CRUDutils {
                 reviews.add(new ReviewData(id, comment, reviewData));
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
 
         return reviews;
@@ -221,7 +226,7 @@ public class CRUDutils {
             statement.setInt(3, cart.getCustomerCartId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -240,7 +245,7 @@ public class CRUDutils {
             statement.setString(4, courier.getVehicle());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -252,7 +257,7 @@ public class CRUDutils {
             statement.setInt(1, customerCart.getCustomerDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -270,7 +275,7 @@ public class CRUDutils {
             statement.setString(4, customer.getUsername());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -291,10 +296,10 @@ public class CRUDutils {
             statement.setInt(4, order.getCustomerDataId());
             statement.setInt(5, order.getFloor());
             statement.setString(6, order.getPayment());
-            statement.setDouble(8, order.getTotal());
+            statement.setDouble(7, order.getTotal());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -310,7 +315,7 @@ public class CRUDutils {
             statement.setInt(3, productAndOrder.getProductDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -324,7 +329,7 @@ public class CRUDutils {
             statement.setString(2, category.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -344,7 +349,7 @@ public class CRUDutils {
             statement.setString(5, product.getProductTitle());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -358,7 +363,7 @@ public class CRUDutils {
             statement.setInt(2, review.getReviewRating());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -370,7 +375,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -380,7 +385,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -390,7 +395,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -400,7 +405,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -410,7 +415,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -420,7 +425,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -430,7 +435,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -440,7 +445,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -450,7 +455,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -460,7 +465,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -470,7 +475,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -480,7 +485,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -490,7 +495,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -500,7 +505,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -510,7 +515,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -520,7 +525,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -530,7 +535,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -540,7 +545,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -550,7 +555,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -560,7 +565,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -570,7 +575,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -580,7 +585,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -590,7 +595,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -600,7 +605,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -610,7 +615,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -620,7 +625,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -630,7 +635,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -640,7 +645,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -650,7 +655,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -660,7 +665,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -670,7 +675,7 @@ public class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -681,7 +686,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -690,7 +695,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -699,7 +704,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -708,7 +713,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -717,7 +722,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -726,7 +731,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -735,7 +740,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -744,7 +749,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
 
@@ -753,8 +758,7 @@ public class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            logger.log(Level.INFO, "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!");
         }
     }
-
 }
