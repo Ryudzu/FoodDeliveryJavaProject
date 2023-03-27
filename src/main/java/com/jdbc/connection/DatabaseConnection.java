@@ -16,13 +16,15 @@ public final class DatabaseConnection {
         String url;
 
         try {
-            FileInputStream fis = new FileInputStream("./src/main/resources/databaseprops.txt");
+            FileInputStream iStream = new FileInputStream("./src/main/resources/databaseprops.txt");
             Properties props = new Properties();
-            props.load(fis);
+            props.load(iStream);
 
             username = props.getProperty("username");
             password = props.getProperty("password");
             url = props.getProperty("url");
+
+            iStream.close();
         } catch (Exception e) {
             throw new IllegalArgumentException("Системе не удалось найти указанное расположение файла или записать данные из файла.");
         }
