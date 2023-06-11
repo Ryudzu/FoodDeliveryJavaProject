@@ -9,7 +9,7 @@ public class OrderData {
 
     private final Pattern ptAddress = Pattern.compile("(^([А-Я][а-я]+\\s\\d{2,},\\s)(кв\\.{1,4})$)");
     private final Pattern ptCity = Pattern.compile("(^[А-Я][а-я]{4,}$)");
-    private final Pattern ptPayment = Pattern.compile("(Картой на сайте|Картой курьеру|Наличные)");
+    private final Pattern ptPayment = Pattern.compile("(Картой на сайте|Картой курьеру|Наличные)", Pattern.CANON_EQ);
 
     private Matcher mt;
 
