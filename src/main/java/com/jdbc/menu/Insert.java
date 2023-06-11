@@ -1,6 +1,8 @@
 package com.jdbc.menu;
 
+import com.jdbc.connection.DatabaseConnection;
 import com.jdbc.crud.CRUDutils;
+import com.jdbc.exceptions.PersonalExceptions;
 
 import java.util.Scanner;
 import java.util.logging.Level;
@@ -13,7 +15,7 @@ public final class Insert {
     private static final Logger logger = Logger.getLogger(Insert.class.getName());
     private static final Scanner input = new Scanner(System.in);
 
-    public static void insert() {
+    public static void insert() throws PersonalExceptions {
         logger.log(Level.INFO, """
                 Какую таблицу вы бы хотели дополнить?
                 1. cart_data
@@ -119,6 +121,8 @@ public final class Insert {
             CRUDutils.insertReviewData(comment, reviewRating);
         } else {
             logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "Закрываем подключение с базой данных...");
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
 

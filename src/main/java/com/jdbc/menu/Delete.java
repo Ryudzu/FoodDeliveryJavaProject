@@ -1,5 +1,6 @@
 package com.jdbc.menu;
 
+import com.jdbc.connection.DatabaseConnection;
 import com.jdbc.crud.CRUDutils;
 
 import java.util.Scanner;
@@ -51,6 +52,8 @@ public final class Delete {
             CRUDutils.deleteReviewData(columnId);
         else {
             logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "Закрываем подключение с базой данных...");
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
 

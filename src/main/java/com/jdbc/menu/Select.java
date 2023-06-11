@@ -1,5 +1,6 @@
 package com.jdbc.menu;
 
+import com.jdbc.connection.DatabaseConnection;
 import com.jdbc.crud.CRUDutils;
 import com.jdbc.data.*;
 
@@ -59,6 +60,8 @@ public final class Select {
             logger.log(Level.INFO, "Список содержимого таблицы review_data: {0}", reviewData);
         } else {
             logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
+            logger.log(Level.INFO, "Закрываем подключение с базой данных...");
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
 

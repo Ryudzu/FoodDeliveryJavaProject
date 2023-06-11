@@ -1,5 +1,6 @@
 package com.jdbc.menu;
 
+import com.jdbc.connection.DatabaseConnection;
 import com.jdbc.crud.CRUDutils;
 
 import java.util.Scanner;
@@ -13,6 +14,7 @@ public final class Update {
     private static final Logger logger = Logger.getLogger(Update.class.getName());
     private static final Scanner input = new Scanner(System.in);
     private static final String ERRORMESSAGE = "Такого выбора не существует в меню. Повторите попытку.";
+    private static final String CLOSECONNECTIONMESSAGE = "Закрываем подключение с базой данных...";
 
     public static void update() {
         logger.log(Level.INFO, """
@@ -109,6 +111,8 @@ public final class Update {
             updateReviewDataColumns(columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
 
@@ -132,6 +136,8 @@ public final class Update {
             CRUDutils.updateCartDataProductDataId(updatedProductDataId, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -157,6 +163,8 @@ public final class Update {
             CRUDutils.updateCourierDataVehicle(updatedCourierVehicle, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -170,6 +178,8 @@ public final class Update {
             CRUDutils.updateCustomerCartCustomerDataId(updatedCustomerDataId, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -195,6 +205,8 @@ public final class Update {
             CRUDutils.updateCustomerDataUsername(updatedCustomerUsername, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -232,6 +244,8 @@ public final class Update {
             CRUDutils.updateOrderDataTotal(updatedOrderTotal, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -253,6 +267,8 @@ public final class Update {
             CRUDutils.updateProductAndOrderProductDataId(updatedProductAndOrderProductId, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -270,6 +286,8 @@ public final class Update {
             CRUDutils.updateProductCategoryDataDescription(updatedProductCategoryDescription, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -299,6 +317,8 @@ public final class Update {
             CRUDutils.updateProductDataProductTitle(updatedProductTitle, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
@@ -316,6 +336,8 @@ public final class Update {
             CRUDutils.updateReviewDataReviewRating(updatedReviewRating, columnId);
         } else {
             logger.log(Level.INFO, "{0}", ERRORMESSAGE);
+            logger.log(Level.INFO, "{0}", CLOSECONNECTIONMESSAGE);
+            DatabaseConnection.closeConnect();
             System.exit(0);
         }
     }
