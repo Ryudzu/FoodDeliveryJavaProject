@@ -2,7 +2,6 @@ package com.jdbc.data;
 
 import com.jdbc.exceptions.PersonalExceptions;
 
-import java.sql.Time;
 import java.sql.Timestamp;
 
 public class ProductAndOrder {
