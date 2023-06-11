@@ -2,6 +2,7 @@ package com.jdbc.crud;
 
 import com.jdbc.connection.DatabaseConnection;
 import com.jdbc.data.*;
+import com.jdbc.exceptions.PersonalExceptions;
 
 import java.sql.*;
 import java.util.List;
@@ -21,7 +22,7 @@ public final class CRUDutils {
     public static List<CartData> showAllCartData() {
         List<CartData> carts = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM cart_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM cart_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -33,6 +34,7 @@ public final class CRUDutils {
                 carts.add(new CartData(id, amount, productDataId, customerCartId));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -42,7 +44,7 @@ public final class CRUDutils {
     public static List<CourierData> showAllCourierData() {
         List<CourierData> couriers = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM courier_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM courier_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
                 int id = result.getInt("id");
@@ -54,6 +56,7 @@ public final class CRUDutils {
                 couriers.add(new CourierData(id, courierPhone, firstname, lastname, vehicle));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -63,7 +66,7 @@ public final class CRUDutils {
     public static List<CustomerCart> showAllCustomerCart() {
         List<CustomerCart> customerCarts = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM customer_cart")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM customer_cart ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -73,6 +76,7 @@ public final class CRUDutils {
                 customerCarts.add(new CustomerCart(id, customerDataId));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -82,7 +86,7 @@ public final class CRUDutils {
     public static List<CustomerData> showAllCustomerData() {
         List<CustomerData> customers = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM customer_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM customer_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -91,10 +95,12 @@ public final class CRUDutils {
                 String email = result.getString("email");
                 String password = result.getString("password");
                 String username = result.getString("username");
+                Timestamp accountRegistered = result.getTimestamp("account_registered_time");
 
-                customers.add(new CustomerData(id, customerPhone, email, password, username));
+                customers.add(new CustomerData(id, customerPhone, email, password, username, accountRegistered));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -104,7 +110,7 @@ public final class CRUDutils {
     public static List<OrderData> showAllOrderData() {
         List<OrderData> orders = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM order_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM order_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -115,12 +121,12 @@ public final class CRUDutils {
                 int customerDataId = result.getInt("customer_data_id");
                 int floor = result.getInt("floor");
                 String payment = result.getString("payment");
-                Timestamp time = result.getTimestamp("time");
                 double total = result.getDouble("total");
 
-                orders.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, time, total));
+                orders.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, total));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -130,17 +136,19 @@ public final class CRUDutils {
     public static List<ProductAndOrder> showAllProductAndOrder() {
         List<ProductAndOrder> productsAndOrders = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_and_order")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_and_order ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
                 int amountOrdered = result.getInt("amount_ordered");
+                Timestamp timeOrdered = result.getTimestamp("product_ordered_time");
                 int orderDataId = result.getInt("order_data_id");
                 int productDataId = result.getInt("product_data_id");
 
-                productsAndOrders.add(new ProductAndOrder(amountOrdered, orderDataId, productDataId));
+                productsAndOrders.add(new ProductAndOrder(amountOrdered, timeOrdered, orderDataId, productDataId));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -150,7 +158,7 @@ public final class CRUDutils {
     public static List<ProductCategoryData> showAllProductCategoryData() {
         List<ProductCategoryData> categories = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_category_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_category_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -161,6 +169,7 @@ public final class CRUDutils {
                 categories.add(new ProductCategoryData(id, categoryTitle, description));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -170,7 +179,7 @@ public final class CRUDutils {
     public static List<ProductData> showAllProductData() {
         List<ProductData> products = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM product_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -184,6 +193,7 @@ public final class CRUDutils {
                 products.add(new ProductData(id, imageLink, price, productCategoryId, productRating, productTitle));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -193,7 +203,7 @@ public final class CRUDutils {
     public static List<ReviewData> showAllReviewData() {
         List<ReviewData> reviews = new ArrayList<>();
 
-        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM review_data")) {
+        try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM review_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -204,6 +214,7 @@ public final class CRUDutils {
                 reviews.add(new ReviewData(id, comment, reviewData));
             }
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
 
@@ -212,7 +223,7 @@ public final class CRUDutils {
 
     // Метод insert позволяет вставить в таблицу новые данные (INSERT INTO таблица).
 
-    public static void insertCartData(int amount, int customerCartId, int productDataId) {
+    public static void insertCartData(int amount, int customerCartId, int productDataId) throws PersonalExceptions {
         CartData cart = new CartData();
         cart.setAmount(amount);
         cart.setCustomerCartId(customerCartId);
@@ -220,17 +231,17 @@ public final class CRUDutils {
 
         try (PreparedStatement statement = CONNECTION.prepareStatement("INSERT INTO cart_data (amount, customer_cart_id, product_data_id) VALUES (?, ?, ?)")) {
             statement.setInt(1, cart.getAmount());
-            statement.setInt(2, cart.getProductDataId());
-            statement.setInt(3, cart.getCustomerCartId());
+            statement.setInt(2, cart.getCustomerCartId());
+            statement.setInt(3, cart.getProductDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertCourierData(String courierPhone, String firstname, String lastname, String vehicle) {
+    public static void insertCourierData(String courierPhone, String firstname, String lastname, String vehicle) throws PersonalExceptions {
         CourierData courier = new CourierData();
-        courier.setCourierPhone(courierPhone);
         courier.setCourierPhone(courierPhone);
         courier.setFirstname(firstname);
         courier.setLastname(lastname);
@@ -243,11 +254,12 @@ public final class CRUDutils {
             statement.setString(4, courier.getVehicle());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertCustomerCart(int customerDataId) {
+    public static void insertCustomerCart(int customerDataId) throws PersonalExceptions {
         CustomerCart customerCart = new CustomerCart();
         customerCart.setCustomerDataId(customerDataId);
 
@@ -255,11 +267,12 @@ public final class CRUDutils {
             statement.setInt(1, customerCart.getCustomerDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertCustomerData(String customerPhone, String email, String password, String username) {
+    public static void insertCustomerData(String customerPhone, String email, String password, String username) throws PersonalExceptions {
         CustomerData customer = new CustomerData();
         customer.setCustomerPhone(customerPhone);
         customer.setEmail(email);
@@ -273,11 +286,12 @@ public final class CRUDutils {
             statement.setString(4, customer.getUsername());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertOrderData(String address, String city, int courierDataId, int customerDataId, int floor, String payment, double total) {
+    public static void insertOrderData(String address, String city, int courierDataId, int customerDataId, int floor, String payment, double total) throws PersonalExceptions {
         OrderData order = new OrderData();
         order.setAddress(address);
         order.setCity(city);
@@ -297,11 +311,12 @@ public final class CRUDutils {
             statement.setDouble(7, order.getTotal());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertProductAndOrder(int amountOrdered, int orderDataId, int productDataId) {
+    public static void insertProductAndOrder(int amountOrdered, int orderDataId, int productDataId) throws PersonalExceptions {
         ProductAndOrder productAndOrder = new ProductAndOrder();
         productAndOrder.setAmountOrdered(amountOrdered);
         productAndOrder.setOrderDataId(orderDataId);
@@ -313,11 +328,12 @@ public final class CRUDutils {
             statement.setInt(3, productAndOrder.getProductDataId());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertProductCategoryData(String categoryTitle, String description) {
+    public static void insertProductCategoryData(String categoryTitle, String description) throws PersonalExceptions {
         ProductCategoryData category = new ProductCategoryData();
         category.setCategoryTitle(categoryTitle);
         category.setDescription(description);
@@ -327,11 +343,12 @@ public final class CRUDutils {
             statement.setString(2, category.getDescription());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertProductData(String imageLink, double price, int productCategoryId, int productRating, String productTitle) {
+    public static void insertProductData(String imageLink, double price, int productCategoryId, int productRating, String productTitle) throws PersonalExceptions {
         ProductData product = new ProductData();
         product.setImageLink(imageLink);
         product.setPrice(price);
@@ -347,11 +364,12 @@ public final class CRUDutils {
             statement.setString(5, product.getProductTitle());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
 
-    public static void insertReviewData(String comment, int reviewRating) {
+    public static void insertReviewData(String comment, int reviewRating) throws PersonalExceptions {
         ReviewData review = new ReviewData();
         review.setComment(comment);
         review.setReviewRating(reviewRating);
@@ -361,6 +379,7 @@ public final class CRUDutils {
             statement.setInt(2, review.getReviewRating());
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -373,6 +392,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -383,6 +403,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -393,6 +414,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -403,6 +425,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -413,6 +436,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -423,6 +447,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -433,6 +458,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -443,6 +469,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -453,6 +480,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -463,6 +491,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -473,6 +502,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -483,6 +513,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -493,6 +524,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -503,6 +535,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -513,6 +546,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -523,6 +557,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -533,6 +568,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -543,6 +579,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -553,6 +590,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -563,6 +601,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -573,6 +612,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -583,6 +623,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -593,6 +634,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -603,6 +645,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -613,6 +656,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -623,6 +667,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -633,6 +678,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -643,6 +689,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -653,6 +700,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -663,6 +711,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -673,6 +722,7 @@ public final class CRUDutils {
             statement.setInt(2, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -684,6 +734,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -693,6 +744,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -702,6 +754,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -711,6 +764,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -720,6 +774,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -729,6 +784,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -738,6 +794,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -747,6 +804,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
@@ -756,6 +814,7 @@ public final class CRUDutils {
             statement.setInt(1, id);
             statement.executeUpdate();
         } catch (SQLException e) {
+            DatabaseConnection.closeConnect();
             throw new IllegalArgumentException(ERRORMESSAGE);
         }
     }
