@@ -1,8 +1,17 @@
 package com.jdbc.data;
 
-import java.sql.Timestamp;
+import com.jdbc.exceptions.PersonalExceptions;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class OrderData {
+
+    private final Pattern ptAddress = Pattern.compile("(^([А-Я][а-я]+\\s\\d{2,},\\s)(кв\\.{1,4})$)");
+    private final Pattern ptCity = Pattern.compile("(^[А-Я][а-я]{4,}$)");
+    private final Pattern ptPayment = Pattern.compile("(Картой на сайте|Картой курьеру|Наличные)");
+
+    private Matcher mt;
 
     private int id;
     private String address;
@@ -11,12 +20,11 @@ public class OrderData {
     private int customerDataId;
     private int floor;
     private String payment;
-    private Timestamp time;
     private double total;
 
     public OrderData() {}
 
-    public OrderData(int id, String address, String city, int courierDataId, int customerDataId, int floor, String payment, Timestamp time, double total) {
+    public OrderData(int id, String address, String city, int courierDataId, int customerDataId, int floor, String payment, double total) {
         this.id = id;
         this.address = address;
         this.city = city;
@@ -24,7 +32,6 @@ public class OrderData {
         this.customerDataId = customerDataId;
         this.floor = floor;
         this.payment = payment;
-        this.time = time;
         this.total = total;
     }
 
@@ -38,72 +45,73 @@ public class OrderData {
                 ", customerDataId=" + customerDataId +
                 ", floor=" + floor +
                 ", payment='" + payment + '\'' +
-                ", time='" + time + '\'' +
                 ", total=" + total +
                 '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress(String address) throws PersonalExceptions {
+        mt = ptAddress.matcher(address);
+        if (mt.matches() && address.length() <= 50) this.address = address;
+        else throw new PersonalExceptions("Название адреса в OrderData невалидно! Оно должно состоять из менее, чем 50 символов и включать в себя: название адреса (Притыцкого), номер дома (11), номер квартиры после запятой (кв. 11).");
     }
 
     public String getCity() {
         return city;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCity(String city) throws PersonalExceptions {
+        mt = ptCity.matcher(city);
+        if (mt.matches() && city.length() <= 20) this.city = city;
+        else throw new PersonalExceptions("Название города в OrderData невалидно! Он должен включать в себя от 4 символов и более (максимально допустимое значение 20 символов).");
     }
 
     public int getCourierDataId() {
         return courierDataId;
     }
 
-    public void setCourierDataId(int courierDataId) {
-        this.courierDataId = courierDataId;
+    public void setCourierDataId(int courierDataId) throws PersonalExceptions {
+        if (courierDataId > 0) this.courierDataId = courierDataId;
+        else throw new PersonalExceptions("ID курьера в OrderData невалидный! Он не может быть отрицательным или равным нулю.");
     }
 
     public int getCustomerDataId() {
         return customerDataId;
     }
 
-    public void setCustomerDataId(int customerDataId) {
-        this.customerDataId = customerDataId;
+    public void setCustomerDataId(int customerDataId) throws PersonalExceptions {
+        if (customerDataId > 0) this.customerDataId = customerDataId;
+        else throw new PersonalExceptions("ID пользователя в OrderData невалидный! Он не может быть отрицательным или равным нулю.");
     }
 
     public int getFloor() {
         return floor;
     }
 
-    public void setFloor(int floor) {
-        this.floor = floor;
+    public void setFloor(int floor) throws PersonalExceptions {
+        if (floor > 0 && floor <= 40) this.floor = floor;
+        else throw new PersonalExceptions("Номер этажа в OrderData невалидный! Он не может быть отрицательным или равным нулю (максимально допустимое значение 40).");
     }
 
     public String getPayment() {
         return payment;
     }
 
-    public void setPayment(String payment) {
-        this.payment = payment;
+    public void setPayment(String payment) throws PersonalExceptions {
+        mt = ptPayment.matcher(payment);
+        if (mt.matches() && payment.length() <= 20) this.payment = payment;
+        else throw new PersonalExceptions("Название способа оплаты в OrderData невалидно! Примеры способов оплаты: 'Картой на сайте', 'Картой курьеру', 'Наличные' (максимально допустимое значение 20 символов).");
     }
 
     public double getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
+    public void setTotal(double total) throws PersonalExceptions {
+        if (total > 0 && total < 10000) this.total = total;
+        else throw new PersonalExceptions("Итоговая стоимость заказа в OrderData невалидна! Она не может быть отрицательной, равной нулю и должна иметь два знака после запятой (максимально допустимое значение 10000).");
     }
 }

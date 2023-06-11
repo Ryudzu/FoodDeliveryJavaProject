@@ -1,5 +1,7 @@
 package com.jdbc.data;
 
+import com.jdbc.exceptions.PersonalExceptions;
+
 public class ReviewData {
 
     private int id;
@@ -23,14 +25,6 @@ public class ReviewData {
                 '}';
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getComment() {
         return comment;
     }
@@ -43,7 +37,8 @@ public class ReviewData {
         return reviewRating;
     }
 
-    public void setReviewRating(int reviewRating) {
-        this.reviewRating = reviewRating;
+    public void setReviewRating(int reviewRating) throws PersonalExceptions {
+        if (reviewRating >= 1 && reviewRating < 6) this.reviewRating = reviewRating;
+        else throw new PersonalExceptions("Рейтинг отзыва в ReviewData невалидный! Он не должен быть меньше 1 и больше 5.");
     }
 }

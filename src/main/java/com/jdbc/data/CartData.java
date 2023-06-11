@@ -1,5 +1,7 @@
 package com.jdbc.data;
 
+import com.jdbc.exceptions.PersonalExceptions;
+
 public class CartData {
 
     private int id;
@@ -26,35 +28,30 @@ public class CartData {
                 '}';
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
-        this.amount = amount;
+    public void setAmount(int amount) throws PersonalExceptions {
+        if (amount >= 0 && amount <= 99) this.amount = amount;
+        else throw new PersonalExceptions("Количество товаров в CartData невалидно! Оно не может быть отрицательным или больше 99.");
     }
 
     public int getProductDataId() {
         return productDataId;
     }
 
-    public void setProductDataId(int productDataId) {
-        this.productDataId = productDataId;
+    public void setProductDataId(int productDataId) throws PersonalExceptions {
+        if (productDataId > 0) this.productDataId = productDataId;
+        else throw new PersonalExceptions("ID товара в CartData невалидный! Он не может быть отрицательным или равным нулю.");
     }
 
     public int getCustomerCartId() {
         return customerCartId;
     }
 
-    public void setCustomerCartId(int customerCartId) {
-        this.customerCartId = customerCartId;
+    public void setCustomerCartId(int customerCartId) throws PersonalExceptions {
+        if (customerCartId > 0) this.customerCartId = customerCartId;
+        else throw new PersonalExceptions("ID пользователя в CartData невалидный! Он не может быть отрицательным или равным нулю.");
     }
 }

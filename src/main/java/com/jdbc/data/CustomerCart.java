@@ -1,5 +1,7 @@
 package com.jdbc.data;
 
+import com.jdbc.exceptions.PersonalExceptions;
+
 public class CustomerCart {
 
     private int id;
@@ -20,19 +22,12 @@ public class CustomerCart {
                 '}';
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getCustomerDataId() {
         return customerDataId;
     }
 
-    public void setCustomerDataId(int customerDataId) {
-        this.customerDataId = customerDataId;
+    public void setCustomerDataId(int customerDataId) throws PersonalExceptions {
+        if (customerDataId > 0) this.customerDataId = customerDataId;
+        else throw new PersonalExceptions("ID пользователя в CustomerCart невалидный! Он не может быть отрицательным или равным нулю.");
     }
 }
