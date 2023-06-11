@@ -12,8 +12,8 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="b8560a57-148f-42d2-afd7-cb71b38c397b">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM customer_data]]></console>
+    <connection id="d912880f-0f5a-41fa-95d2-d41f22fb20b2">
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM courier_data;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
@@ -26,7 +26,7 @@
     <retain-sticky-names value="false" />
   </component>
   <component name="DBNavigator.Project.FileConnectionMappingManager">
-    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/fd_dump.sql" connection-id="b8560a57-148f-42d2-afd7-cb71b38c397b" session-id="MAIN" current-schema="food_delivery" />
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/fooddeliveryDB.sql" connection-id="d912880f-0f5a-41fa-95d2-d41f22fb20b2" session-id="MAIN" current-schema="food_delivery" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -45,7 +45,7 @@
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="b8560a57-148f-42d2-afd7-cb71b38c397b" active="true" signed="true">
+      <connection id="d912880f-0f5a-41fa-95d2-d41f22fb20b2" active="true" signed="true">
         <database>
           <name value="Connection" />
           <description value="" />
