@@ -1,6 +1,7 @@
 package com.jdbc;
 
 import com.jdbc.connection.DatabaseConnection;
+import com.jdbc.exceptions.PersonalExceptions;
 import com.jdbc.menu.Delete;
 import com.jdbc.menu.Insert;
 import com.jdbc.menu.Select;
@@ -15,11 +16,11 @@ public class App {
     private static final Logger logger = Logger.getLogger(App.class.getName());
     private static final Scanner input = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws PersonalExceptions {
         databaseMenu();
     }
 
-    public static void databaseMenu() {
+    public static void databaseMenu() throws PersonalExceptions {
         DatabaseConnection.connect();
         boolean repeat = true;
 
@@ -46,7 +47,7 @@ public class App {
                 repeat = false;
             else {
                 logger.log(Level.INFO, "Такого выбора не существует в меню. Повторите попытку.");
-                System.exit(0);
+                repeat = false;
             }
         } while (repeat);
 
