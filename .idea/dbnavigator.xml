@@ -13,7 +13,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="d912880f-0f5a-41fa-95d2-d41f22fb20b2">
-      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM courier_data;]]></console>
+      <console name="Connection" type="STANDARD" schema="public" session="Main"><![CDATA[SELECT * FROM customer_cart;]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseEditorStateManager">
