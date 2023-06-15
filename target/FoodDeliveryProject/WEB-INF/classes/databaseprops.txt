@@ -1,0 +1,5 @@
+# Database details.
+
+username=postgres
+password=rootroot
+url=jdbc:postgresql://localhost:5432/food_delivery
