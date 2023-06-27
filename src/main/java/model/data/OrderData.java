@@ -1,5 +1,6 @@
 package model.data;
 
+@SuppressWarnings("squid:S00107")
 public class OrderData {
 
     private int id;
