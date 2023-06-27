@@ -1,7 +1,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="e" uri="https://www.owasp.org/index.php/OWASP_Java_Encoder_Project" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
     <head>
         <title>Management Application</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -34,34 +36,39 @@
                         </c:if>
                         <form action="${pageContext.request.contextPath}/register" method="post" name="registerServ">
                             <fieldset class="form-group">
-                                <label for="login">Логин</label>
-                                <input type="text" class="form-control" id="login" name="login" value="${param.login}" required="required">
+                                <legend style="font-size: 16px;">Логин</legend>
+                                <label for="login"></label>
+                                <input type="text" class="form-control" id="login" name="login" value="${e:forHtml(param.login)}" required="required">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label for="email">Электронная почта</label>
-                                <input type="text" class="form-control" id="email" name="email" value="${param.email}" required="required">
+                                <legend style="font-size: 16px;">Электронная почта</legend>
+                                <label for="email"></label>
+                                <input type="text" class="form-control" id="email" name="email" value="${e:forHtml(param.email)}" required="required">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label for="phone">Номер телефона</label>
-                                <input type="text" class="form-control" id="phone" name="phone" value="${param.phone}" required="required">
+                                <legend style="font-size: 16px;">Номер телефона</legend>
+                                <label for="phone"></label>
+                                <input type="text" class="form-control" id="phone" name="phone" value="${e:forHtml(param.phone)}" required="required">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label for="password">Пароль</label>
+                                <legend style="font-size: 16px;">Пароль</legend>
+                                <label for="password"></label>
                                 <input type="text" class="form-control" id="password" name="password" required="required">
                             </fieldset>
                             <fieldset class="form-group">
-                                <label for="passwordDuplicate">Повторите пароль</label>
+                                <legend style="font-size: 16px;">Повторите пароль</legend>
+                                <label for="passwordDuplicate"></label>
                                 <input type="text" class="form-control" id="passwordDuplicate" name="passwordDuplicate" required="required">
                             </fieldset>
-                            <button type="submit" class="btn btn-success">Зарегистрироваться</button>
+                            <button type="submit" class="btn btn-success btn-block" style="margin-bottom: 5px">Зарегистрироваться</button>
                         </form>
-                        <a href="<c:url value="/login" />" class="btn btn-secondary">Уже есть аккаунт?</a>
+                        <a href="<c:url value="/login" />" class="btn btn-secondary btn-block">Уже есть аккаунт?</a>
                     </div>
                 </div>
             </div>
         </main>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" type=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" type=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" type=""></script>
     </body>
 </html>

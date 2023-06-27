@@ -3,7 +3,8 @@
 
 <c:set var="totalPrice" value="${0}" />
 
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
     <head>
         <title>Management Application</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -35,7 +36,9 @@
                                 <c:if test="${sessionScope.deletedProduct != null}">
                                     <div class="alert alert-success">Успешно убран из корзины продукт "${sessionScope.deletedProduct}"</div>
                                     <% request.getSession().removeAttribute("deletedProduct"); %>
-                                </c:if><table class="table table-bordered m-0">
+                                </c:if>
+                            <table class="table table-bordered m-0">
+                            <caption>Доставка 30 минут!</caption>
                             <thead>
                                 <tr>
                                     <th class="text-center py-3 px-4" style="min-width: 400px;">Название продукта</th>
@@ -53,7 +56,7 @@
                                     <form action="${pageContext.request.contextPath}/cart" method="post" name="cartServ">
                                         <td class="align-middle p-4">
                                             <input type="hidden" name="idProductInCart" value="${cartProduct.id}">
-                                            <input type="text" class="form-control text-center" value="${cartProduct.amount}" name="amount">
+                                            <label><input type="text" class="form-control text-center" value="${cartProduct.amount}" name="amount"></label>
                                         </td>
                                     </form>
                                     <td class="text-center font-weight-semibold align-middle p-4">${cartProduct.amount * cartProduct.price} BYN</td>
@@ -85,8 +88,8 @@
             </c:otherwise>
             </c:choose>
         </main>
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous" type=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous" type=""></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" type=""></script>
     </body>
 </html>
