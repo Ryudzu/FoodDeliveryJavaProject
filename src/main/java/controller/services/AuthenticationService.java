@@ -4,10 +4,11 @@ import model.crud.CRUDutils;
 import model.data.CustomerData;
 import org.apache.commons.codec.digest.DigestUtils;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AuthenticationService implements Authentication {
+public class AuthenticationService implements Authentication, Serializable {
 
     private final List<CustomerData> customers = new ArrayList<>(CRUDutils.showAllCustomerData());
     private CustomerData customer = null;

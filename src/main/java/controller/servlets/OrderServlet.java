@@ -41,7 +41,7 @@ public class OrderServlet extends HttpServlet {
             for (ProductsInCart productInCart : productsInCart)
                 CRUDutils.insertProductAndOrder(productInCart.getAmount(), idOrder, productInCart.getProductDataId());
         } catch (PersonalExceptions e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
 
         req.setAttribute("orderSuccess", "Спасибо за покупку! Ваш заказ уже в пути!");

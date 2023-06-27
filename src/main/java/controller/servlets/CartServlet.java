@@ -34,7 +34,7 @@ public class CartServlet extends HttpServlet {
             CRUDutils.updateCartDataAmount(amount, idProductInCart);
             doGet(req, resp);
         } catch (PersonalExceptions e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
     }
 }

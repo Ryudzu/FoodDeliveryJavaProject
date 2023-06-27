@@ -15,7 +15,8 @@ public final class Delete {
 
     public static void delete() {
         log.info("""
-                \nСодержимое какой таблицы вы бы хотели удалить?
+                
+                Содержимое какой таблицы вы бы хотели удалить?
                 1. cart_data
                 2. courier_data
                 3. customer_cart

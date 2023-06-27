@@ -10,13 +10,45 @@ import java.util.*;
 
 public final class CRUDutils {
 
-    public CRUDutils() {}
+    private CRUDutils() {}
 
     // Подключение к базе данных для осуществления запросов.
 
     private static final Connection CONNECTION = DatabaseConnection.connect();
     private static final String ERRORMESSAGE = "Ошибка доступа к базе данных или иная ошибка, связанная с работой с базами данных!";
-
+    private static final String ID = "id";
+    private static final String AMOUNT = "amount";
+    private static final String PRODUCTDATAID = "product_data_id";
+    private static final String CUSTOMERCARTID = "customer_cart_id";
+    private static final String COURIERPHONE = "courier_phone";
+    private static final String FIRSTNAME = "firstname";
+    private static final String LASTNAME = "lastname";
+    private static final String VEHICLE = "vehicle";
+    private static final String CUSTOMERDATAID = "customer_data_id";
+    private static final String CUSTOMERPHONE = "customer_phone";
+    private static final String EMAIL = "email";
+    private static final String PASSWORD = "password";
+    private static final String USERNAME = "username";
+    private static final String ACCOUNTREGTIME = "account_registered_time";
+    private static final String ADDRESS = "address";
+    private static final String CITY = "city";
+    private static final String COURIERDATAID = "courier_data_id";
+    private static final String FLOOR = "floor";
+    private static final String PAYMENT = "payment";
+    private static final String TOTAL = "total";
+    private static final String AMOUNTORDERED = "amount_ordered";
+    private static final String ORDEREDTIME = "product_ordered_time";
+    private static final String ORDERDATAID = "order_data_id";
+    private static final String CATEGORYTITLE = "category_title";
+    private static final String DESCRIPTION = "description";
+    private static final String IMAGELINK = "image_link";
+    private static final String PRICE = "price";
+    private static final String PRODUCTCATEGORYID = "product_category_id";
+    private static final String PRODUCTRATING = "product_rating";
+    private static final String PRODUCTTITLE = "product_title";
+    private static final String COMMENT = "comment";
+    private static final String REVIEWRATING = "review_rating";
+    
     // Метод showAll позволяет просмотреть все содержимое в конкретной таблице (SELECT * FROM).
 
     public static List<CartData> showAllCartData() {
@@ -26,10 +58,10 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                int amount = result.getInt("amount");
-                int productDataId = result.getInt("product_data_id");
-                int customerCartId = result.getInt("customer_cart_id");
+                int id = result.getInt(ID);
+                int amount = result.getInt(AMOUNT);
+                int productDataId = result.getInt(PRODUCTDATAID);
+                int customerCartId = result.getInt(CUSTOMERCARTID);
 
                 carts.add(new CartData(id, amount, productDataId, customerCartId));
             }
@@ -46,11 +78,11 @@ public final class CRUDutils {
         try (PreparedStatement statement = CONNECTION.prepareStatement("SELECT * FROM courier_data ORDER BY id")) {
             ResultSet result = statement.executeQuery();
             while (result.next()) {
-                int id = result.getInt("id");
-                String courierPhone = result.getString("courier_phone");
-                String firstname = result.getString("firstname");
-                String lastname = result.getString("lastname");
-                String vehicle = result.getString("vehicle");
+                int id = result.getInt(ID);
+                String courierPhone = result.getString(COURIERPHONE);
+                String firstname = result.getString(FIRSTNAME);
+                String lastname = result.getString(LASTNAME);
+                String vehicle = result.getString(VEHICLE);
 
                 couriers.add(new CourierData(id, courierPhone, firstname, lastname, vehicle));
             }
@@ -68,8 +100,8 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                int customerDataId = result.getInt("customer_data_id");
+                int id = result.getInt(ID);
+                int customerDataId = result.getInt(CUSTOMERDATAID);
 
                 customerCarts.add(new CustomerCart(id, customerDataId));
             }
@@ -87,12 +119,12 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String customerPhone = result.getString("customer_phone");
-                String email = result.getString("email");
-                String password = result.getString("password");
-                String username = result.getString("username");
-                Timestamp accountRegistered = result.getTimestamp("account_registered_time");
+                int id = result.getInt(ID);
+                String customerPhone = result.getString(CUSTOMERPHONE);
+                String email = result.getString(EMAIL);
+                String password = result.getString(PASSWORD);
+                String username = result.getString(USERNAME);
+                Timestamp accountRegistered = result.getTimestamp(ACCOUNTREGTIME);
 
                 customers.add(new CustomerData(id, customerPhone, email, password, username, accountRegistered));
             }
@@ -110,14 +142,14 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String address = result.getString("address");
-                String city = result.getString("city");
-                int courierDataId = result.getInt("courier_data_id");
-                int customerDataId = result.getInt("customer_data_id");
-                int floor = result.getInt("floor");
-                String payment = result.getString("payment");
-                double total = result.getDouble("total");
+                int id = result.getInt(ID);
+                String address = result.getString(ADDRESS);
+                String city = result.getString(CITY);
+                int courierDataId = result.getInt(COURIERDATAID);
+                int customerDataId = result.getInt(CUSTOMERDATAID);
+                int floor = result.getInt(FLOOR);
+                String payment = result.getString(PAYMENT);
+                double total = result.getDouble(TOTAL);
 
                 orders.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, total));
             }
@@ -135,10 +167,10 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int amountOrdered = result.getInt("amount_ordered");
-                Timestamp timeOrdered = result.getTimestamp("product_ordered_time");
-                int orderDataId = result.getInt("order_data_id");
-                int productDataId = result.getInt("product_data_id");
+                int amountOrdered = result.getInt(AMOUNTORDERED);
+                Timestamp timeOrdered = result.getTimestamp(ORDEREDTIME);
+                int orderDataId = result.getInt(ORDERDATAID);
+                int productDataId = result.getInt(PRODUCTDATAID);
 
                 productsAndOrders.add(new ProductAndOrder(amountOrdered, timeOrdered, orderDataId, productDataId));
             }
@@ -156,9 +188,9 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String categoryTitle = result.getString("category_title");
-                String description = result.getString("description");
+                int id = result.getInt(ID);
+                String categoryTitle = result.getString(CATEGORYTITLE);
+                String description = result.getString(DESCRIPTION);
 
                 categories.add(new ProductCategoryData(id, categoryTitle, description));
             }
@@ -176,12 +208,12 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String imageLink = result.getString("image_link");
-                double price = result.getDouble("price");
-                int productCategoryId = result.getInt("product_category_id");
-                int productRating = result.getInt("product_rating");
-                String productTitle = result.getString("product_title");
+                int id = result.getInt(ID);
+                String imageLink = result.getString(IMAGELINK);
+                double price = result.getDouble(PRICE);
+                int productCategoryId = result.getInt(PRODUCTCATEGORYID);
+                int productRating = result.getInt(PRODUCTRATING);
+                String productTitle = result.getString(PRODUCTTITLE);
 
                 products.add(new ProductData(id, imageLink, price, productCategoryId, productRating, productTitle));
             }
@@ -199,11 +231,11 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String comment = result.getString("comment");
-                int reviewData = result.getInt("review_rating");
+                int id = result.getInt(ID);
+                String comment = result.getString(COMMENT);
+                int reviewRating = result.getInt(REVIEWRATING);
 
-                reviews.add(new ReviewData(id, comment, reviewData));
+                reviews.add(new ReviewData(id, comment, reviewRating));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException(ERRORMESSAGE);
@@ -220,10 +252,10 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                int amount = result.getInt("amount");
-                int productDataId = result.getInt("product_data_id");
-                int customerCartId = result.getInt("customer_cart_id");
+                int id = result.getInt(ID);
+                int amount = result.getInt(AMOUNT);
+                int productDataId = result.getInt(PRODUCTDATAID);
+                int customerCartId = result.getInt(CUSTOMERCARTID);
 
                 cart.add(new CartData(id, amount, productDataId, customerCartId));
             }
@@ -242,11 +274,11 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                String courierPhone = result.getString("courier_phone");
-                String firstname = result.getString("firstname");
-                String lastname = result.getString("lastname");
-                String vehicle = result.getString("vehicle");
+                int id = result.getInt(ID);
+                String courierPhone = result.getString(COURIERPHONE);
+                String firstname = result.getString(FIRSTNAME);
+                String lastname = result.getString(LASTNAME);
+                String vehicle = result.getString(VEHICLE);
 
                 courier.add(new CourierData(id, courierPhone, firstname, lastname, vehicle));
             }
@@ -265,8 +297,8 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                int customerDataId = result.getInt("customer_data_id");
+                int id = result.getInt(ID);
+                int customerDataId = result.getInt(CUSTOMERDATAID);
 
                 customerCart.add(new CustomerCart(id, customerDataId));
             }
@@ -285,12 +317,12 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                String customerPhone = result.getString("customer_phone");
-                String email = result.getString("email");
-                String password = result.getString("password");
-                String username = result.getString("username");
-                Timestamp accountRegistered = result.getTimestamp("account_registered_time");
+                int id = result.getInt(ID);
+                String customerPhone = result.getString(CUSTOMERPHONE);
+                String email = result.getString(EMAIL);
+                String password = result.getString(PASSWORD);
+                String username = result.getString(USERNAME);
+                Timestamp accountRegistered = result.getTimestamp(ACCOUNTREGTIME);
 
                 customer.add(new CustomerData(id, customerPhone, email, password, username, accountRegistered));
             }
@@ -309,14 +341,14 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                String address = result.getString("address");
-                String city = result.getString("city");
-                int courierDataId = result.getInt("courier_data_id");
-                int customerDataId = result.getInt("customer_data_id");
-                int floor = result.getInt("floor");
-                String payment = result.getString("payment");
-                double total = result.getDouble("total");
+                int id = result.getInt(ID);
+                String address = result.getString(ADDRESS);
+                String city = result.getString(CITY);
+                int courierDataId = result.getInt(COURIERDATAID);
+                int customerDataId = result.getInt(CUSTOMERDATAID);
+                int floor = result.getInt(FLOOR);
+                String payment = result.getString(PAYMENT);
+                double total = result.getDouble(TOTAL);
 
                 order.add(new OrderData(id, address, city, courierDataId, customerDataId, floor, payment, total));
             }
@@ -335,10 +367,10 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int amountOrdered = result.getInt("amount_ordered");
-                Timestamp timeOrdered = result.getTimestamp("product_ordered_time");
-                int orderDataId = result.getInt("order_data_id");
-                int productDataId = result.getInt("product_data_id");
+                int amountOrdered = result.getInt(AMOUNTORDERED);
+                Timestamp timeOrdered = result.getTimestamp(ORDEREDTIME);
+                int orderDataId = result.getInt(ORDERDATAID);
+                int productDataId = result.getInt(PRODUCTDATAID);
 
                 productAndOrder.add(new ProductAndOrder(amountOrdered, timeOrdered, orderDataId, productDataId));
             }
@@ -357,9 +389,9 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                String categoryTitle = result.getString("category_title");
-                String description = result.getString("description");
+                int id = result.getInt(ID);
+                String categoryTitle = result.getString(CATEGORYTITLE);
+                String description = result.getString(DESCRIPTION);
 
                 category.add(new ProductCategoryData(id, categoryTitle, description));
             }
@@ -378,12 +410,12 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next()) {
-                int id = result.getInt("id");
-                String imageLink = result.getString("image_link");
-                double price = result.getDouble("price");
-                int productCategoryId = result.getInt("product_category_id");
-                int productRating = result.getInt("product_rating");
-                String productTitle = result.getString("product_title");
+                int id = result.getInt(ID);
+                String imageLink = result.getString(IMAGELINK);
+                double price = result.getDouble(PRICE);
+                int productCategoryId = result.getInt(PRODUCTCATEGORYID);
+                int productRating = result.getInt(PRODUCTRATING);
+                String productTitle = result.getString(PRODUCTTITLE);
 
                 product.add(new ProductData(id, imageLink, price, productCategoryId, productRating, productTitle));
             }
@@ -402,11 +434,11 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String comment = result.getString("comment");
-                int reviewData = result.getInt("review_rating");
+                int id = result.getInt(ID);
+                String comment = result.getString(COMMENT);
+                int reviewRating = result.getInt(REVIEWRATING);
 
-                review.add(new ReviewData(id, comment, reviewData));
+                review.add(new ReviewData(id, comment, reviewRating));
             }
         } catch (SQLException e) {
             throw new IllegalArgumentException(ERRORMESSAGE);
@@ -1027,7 +1059,7 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next())
-                return result.getInt("id");
+                return result.getInt(ID);
             else
                 return 0;
         } catch (SQLException e) {
@@ -1041,7 +1073,7 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             if (result.next())
-                return result.getInt("id");
+                return result.getInt(ID);
             else
                 return 0;
         } catch (SQLException e) {
@@ -1057,11 +1089,11 @@ public final class CRUDutils {
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
-                int id = result.getInt("id");
-                String productTitle = result.getString("product_title");
-                int productDataId = result.getInt("product_data_id");
-                double price = result.getDouble("price");
-                int amount = result.getInt("amount");
+                int id = result.getInt(ID);
+                String productTitle = result.getString(PRODUCTTITLE);
+                int productDataId = result.getInt(PRODUCTDATAID);
+                double price = result.getDouble(PRICE);
+                int amount = result.getInt(AMOUNT);
 
                 cartProducts.add(new ProductsInCart(id, productTitle, productDataId, price, amount));
             }

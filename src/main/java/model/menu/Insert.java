@@ -16,7 +16,8 @@ public final class Insert {
 
     public static void insert() throws PersonalExceptions {
         log.info("""
-                \nКакую таблицу вы бы хотели дополнить?
+                
+                Какую таблицу вы бы хотели дополнить?
                 1. cart_data
                 2. courier_data
                 3. customer_cart

@@ -46,7 +46,7 @@ public class RegisterServlet extends HttpServlet {
                     final int idCustomer = authService.getIdCustomerCart(login);
                     CRUDutils.insertCustomerCart(idCustomer);
                 } catch (PersonalExceptions e) {
-                    throw new RuntimeException(e);
+                    throw new IllegalArgumentException(e);
                 }
                 req.setAttribute("registerSuccess", "Регистрация прошла успешно, теперь вы можете войти в свой аккаунт!");
                 resp.sendRedirect("/login?registerSuccess=true");

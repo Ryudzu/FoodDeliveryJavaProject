@@ -25,7 +25,7 @@ public class ReviewServlet extends HttpServlet {
         try {
             CRUDutils.insertReviewData(comment, rating);
         } catch (PersonalExceptions e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
 
         req.setAttribute("reviewSuccess", "Благодарим вас за отзыв!");

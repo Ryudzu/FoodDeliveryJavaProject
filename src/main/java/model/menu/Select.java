@@ -16,7 +16,8 @@ public final class Select {
 
     public static void showAll() {
         log.info("""
-                \nСодержимое какой таблицы вы хотите вывести на экран?
+                
+                Содержимое какой таблицы вы хотите вывести на экран?
                 1. cart_data
                 2. courier_data
                 3. customer_cart
@@ -66,7 +67,8 @@ public final class Select {
 
     public static void showConcrete() {
         log.info("""
-                \nСодержимое строки какой таблицы вы хотите вывести на экран?
+                
+                Содержимое строки какой таблицы вы хотите вывести на экран?
                 1. cart_data
                 2. courier_data
                 3. customer_cart

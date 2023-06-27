@@ -1,7 +1,6 @@
 package model.menu;
 
 import lombok.extern.slf4j.Slf4j;
-import model.connection.DatabaseConnection;
 import model.crud.CRUDutils;
 import model.exceptions.PersonalExceptions;
 
@@ -14,11 +13,12 @@ public final class Update {
     
     private static final Scanner input = new Scanner(System.in);
     private static final String ERRORMESSAGE = "Такого выбора не существует в меню. Повторите попытку.";
-    private static final String CLOSECONNECTIONMESSAGE = "Закрываем подключение с базой данных...";
+    private static final String INPUTMESSAGE = "\n{}";
 
     public static void update() throws PersonalExceptions {
         log.info("""
-                \nСодержимое какой таблицы вы бы хотели обновить?
+                
+                Содержимое какой таблицы вы бы хотели обновить?
                 1. cart_data
                 2. courier_data
                 3. customer_cart
@@ -35,7 +35,8 @@ public final class Update {
 
         if (choice == 1) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. amount
                     2. customer_cart_id
                     3. product_data_id""");
@@ -43,7 +44,8 @@ public final class Update {
             updateCartDataColumns(columnId);
         } else if (choice == 2) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. courier_phone
                     2. firstname
                     3. lastname
@@ -52,13 +54,15 @@ public final class Update {
             updateCourierDataColumns(columnId);
         } else if (choice == 3) {
             log.info("""
+                    
                     Выберите колонку, которую необходимо обновить.
                     1. customer_data_id""");
 
             updateCustomerCartColumns(columnId);
         } else if (choice == 4) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. customer_phone
                     2. email
                     3. password
@@ -67,7 +71,8 @@ public final class Update {
             updateCustomerDataColumns(columnId);
         } else if (choice == 5) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. address
                     2. city
                     3. courier_data_id
@@ -79,14 +84,16 @@ public final class Update {
             updateOrderDataColumns(columnId);
         } else if (choice == 6) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. category_title
                     2. description""");
 
             updateProductCategoryDataColumns(columnId);
         } else if (choice == 7) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. image_link
                     2. price
                     3. product_category_id
@@ -96,13 +103,14 @@ public final class Update {
             updateProductDataColumns(columnId);
         } else if (choice == 8) {
             log.info("""
-                    \nВыберите колонку, которую необходимо обновить.
+                    
+                    Выберите колонку, которую необходимо обновить.
                     1. comment
                     2. review_rating""");
 
             updateReviewDataColumns(columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
 
@@ -125,7 +133,7 @@ public final class Update {
             int updatedProductDataId = input.nextInt();
             CRUDutils.updateCartDataProductDataId(updatedProductDataId, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -150,7 +158,7 @@ public final class Update {
             String updatedCourierVehicle = input.next();
             CRUDutils.updateCourierDataVehicle(updatedCourierVehicle, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -163,7 +171,7 @@ public final class Update {
             int updatedCustomerDataId = input.nextInt();
             CRUDutils.updateCustomerCartCustomerDataId(updatedCustomerDataId, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -188,7 +196,7 @@ public final class Update {
             String updatedCustomerUsername = input.next();
             CRUDutils.updateCustomerDataUsername(updatedCustomerUsername, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -227,7 +235,7 @@ public final class Update {
             double updatedOrderTotal = input.nextDouble();
             CRUDutils.updateOrderDataTotal(updatedOrderTotal, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -245,7 +253,7 @@ public final class Update {
             String updatedProductCategoryDescription = input.nextLine();
             CRUDutils.updateProductCategoryDataDescription(updatedProductCategoryDescription, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -274,7 +282,7 @@ public final class Update {
             String updatedProductTitle = input.next();
             CRUDutils.updateProductDataProductTitle(updatedProductTitle, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }
@@ -292,7 +300,7 @@ public final class Update {
             int updatedReviewRating = input.nextInt();
             CRUDutils.updateReviewDataReviewRating(updatedReviewRating, columnId);
         } else {
-            log.info("\n{}\n{}", ERRORMESSAGE, CLOSECONNECTIONMESSAGE);
+            log.info(INPUTMESSAGE, ERRORMESSAGE);
             System.exit(0);
         }
     }

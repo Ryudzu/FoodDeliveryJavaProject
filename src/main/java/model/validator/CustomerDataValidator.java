@@ -3,7 +3,6 @@ package model.validator;
 import model.data.CustomerData;
 import model.exceptions.PersonalExceptions;
 import org.apache.commons.codec.digest.DigestUtils;
-import org.postgresql.util.MD5Digest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -35,38 +35,37 @@
                                 <c:if test="${sessionScope.deletedProduct != null}">
                                     <div class="alert alert-success">Успешно убран из корзины продукт "${sessionScope.deletedProduct}"</div>
                                     <% request.getSession().removeAttribute("deletedProduct"); %>
-                                </c:if>
-                            <table class="table table-bordered m-0">
-                                <thead>
-                                    <tr>
-                                        <th class="text-center py-3 px-4" style="min-width: 400px;">Название продукта</th>
-                                        <th class="text-center py-3 px-4" style="width: 100px;">Цена</th>
-                                        <th class="text-center py-3 px-4" style="width: 120px;">Количество</th>
-                                        <th class="text-center py-3 px-4" style="width: 100px;">Итого</th>
-                                        <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <c:forEach var="cartProduct" items="${cartProducts}">
-                                    <tr>
-                                        <td class="text-center font-weight-semibold align-middle p-4"><c:out value="${cartProduct.productTitle}" /></td>
-                                        <td class="text-center font-weight-semibold align-middle p-4"><c:out value="${cartProduct.price}" /> BYN</td>
-                                        <form action="${pageContext.request.contextPath}/cart" method="post" name="cartServ">
-                                            <td class="align-middle p-4">
-                                                <input type="hidden" name="idProductInCart" value="${cartProduct.id}">
-                                                <input type="text" class="form-control text-center" value="${cartProduct.amount}" name="amount">
-                                            </td>
-                                        </form>
-                                        <td class="text-center font-weight-semibold align-middle p-4">${cartProduct.amount * cartProduct.price} BYN</td>
-                                        <td class="text-center align-middle px-0"><a href="<%=request.getContextPath()%>/views/deleteProductFromCart.jsp?id=<c:out value="${cartProduct.id}" />&productTitle=<c:out value="${cartProduct.productTitle}" />" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
-                                        <c:set var="totalPrice" value="${totalPrice + cartProduct.amount * cartProduct.price}" />
-                                    </tr>
-                                    </c:forEach>
-                                    <form action="${pageContext.request.contextPath}/order" method="get" name="orderServ" id="orderServ">
-                                        <input type="hidden" name="total" value="${totalPrice}">
+                                </c:if><table class="table table-bordered m-0">
+                            <thead>
+                                <tr>
+                                    <th class="text-center py-3 px-4" style="min-width: 400px;">Название продукта</th>
+                                    <th class="text-center py-3 px-4" style="width: 100px;">Цена</th>
+                                    <th class="text-center py-3 px-4" style="width: 120px;">Количество</th>
+                                    <th class="text-center py-3 px-4" style="width: 100px;">Итого</th>
+                                    <th class="text-center align-middle py-3 px-0" style="width: 40px;"><a href="#" class="shop-tooltip float-none text-light" title="" data-original-title="Clear cart"><i class="ino ion-md-trash"></i></a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="cartProduct" items="${cartProducts}">
+                                <tr>
+                                    <td class="text-center font-weight-semibold align-middle p-4"><c:out value="${cartProduct.productTitle}" /></td>
+                                    <td class="text-center font-weight-semibold align-middle p-4"><c:out value="${cartProduct.price}" /> BYN</td>
+                                    <form action="${pageContext.request.contextPath}/cart" method="post" name="cartServ">
+                                        <td class="align-middle p-4">
+                                            <input type="hidden" name="idProductInCart" value="${cartProduct.id}">
+                                            <input type="text" class="form-control text-center" value="${cartProduct.amount}" name="amount">
+                                        </td>
                                     </form>
-                                </tbody>
-                            </table>
+                                    <td class="text-center font-weight-semibold align-middle p-4">${cartProduct.amount * cartProduct.price} BYN</td>
+                                    <td class="text-center align-middle px-0"><a href="<%=request.getContextPath()%>/views/deleteProductFromCart.jsp?id=<c:out value="${cartProduct.id}" />&productTitle=<c:out value="${cartProduct.productTitle}" />" class="shop-tooltip close float-none text-danger" title="" data-original-title="Remove">×</a></td>
+                                    <c:set var="totalPrice" value="${totalPrice + cartProduct.amount * cartProduct.price}" />
+                                </tr>
+                                </c:forEach>
+                                <form action="${pageContext.request.contextPath}/order" method="get" name="orderServ" id="orderServ">
+                                    <input type="hidden" name="total" value="${totalPrice}">
+                                </form>
+                            </tbody>
+                        </table>
                     </div>
                     <div class="d-flex flex-wrap justify-content-between align-items-center pb-4">
                         <div class="mt-4"></div>

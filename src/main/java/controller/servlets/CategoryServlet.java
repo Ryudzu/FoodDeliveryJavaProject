@@ -35,7 +35,7 @@ public class CategoryServlet extends HttpServlet {
             else
                 CRUDutils.insertCartData(1, idProduct, idCustomer);
         } catch (PersonalExceptions e) {
-            throw new RuntimeException(e);
+            throw new IllegalArgumentException(e);
         }
 
         req.getRequestDispatcher("/views/category.jsp?id=" + idCategory + "&categoryTitle=" + categoryTitle).forward(req, resp);
