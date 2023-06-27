@@ -2,8 +2,10 @@ package model.validator;
 
 import model.data.CustomerData;
 import model.exceptions.PersonalExceptions;
-import org.apache.commons.codec.digest.DigestUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,24 +28,52 @@ public final class CustomerDataValidator {
     }
 
     public void validateCustomerPhone(String customerPhone) throws PersonalExceptions {
-        if (customerPhone.length() == 13) customer.setCustomerPhone(customerPhone);
-        else throw new PersonalExceptions("Номер телефона в CustomerData невалидный! Он должен состоять из 13 символов: знак +, код страны (375), код сотового оператора (29), семизначный номер телефона.");
+        if (customerPhone.length() == 13)
+            customer.setCustomerPhone(customerPhone);
+        else
+            throw new PersonalExceptions("Номер телефона в CustomerData невалидный! Он должен состоять из 13 символов: знак +, код страны (375), код сотового оператора (29), семизначный номер телефона.");
     }
 
     public void validateEmail(String email) throws PersonalExceptions {
         mt = ptEmail.matcher(email);
-        if (mt.matches() && email.length() <= 256) customer.setEmail(email);
-        else throw new PersonalExceptions("Название электронной почты в CustomerData невалидно! Оно должно состоять из менее, чем 256 символов и включать себя: название почты (blaguladzimir), знак '@', доменное имя (gmail.com).");
+        if (mt.matches() && email.length() <= 256)
+            customer.setEmail(email);
+        else
+            throw new PersonalExceptions("Название электронной почты в CustomerData невалидно! Оно должно состоять из менее, чем 256 символов и включать себя: название почты (blaguladzimir), знак '@', доменное имя (gmail.com).");
     }
 
     public void validatePassword(String password) throws PersonalExceptions {
         mt = ptPassword.matcher(password);
-        if (mt.matches() && password.length() <= 35) customer.setPassword(DigestUtils.md5Hex(password));
-        else throw new PersonalExceptions("Пароль в CustomerData невалидный! Требования при создании пароля: минимальная длина - 8 символов, максимальная длина - 35 символов, сочетание больших и маленьких букв, наличие цифр и специальных символов, отсутствие последовательных повторений (например, 1111), последовательных дат (например, 2000), имени пользователя и других очевидных или личных данных.");
+        if (mt.matches() && password.length() <= 32) {
+            try {
+                MessageDigest md = MessageDigest.getInstance("SHA-512");
+
+                byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+                byte[] hashedBytes = md.digest(passwordBytes);
+
+                StringBuilder hexString = new StringBuilder();
+                for (byte b : hashedBytes) {
+                    String hex = Integer.toHexString(0xff & b);
+
+                    if (hex.length() == 1)
+                        hexString.append('0');
+
+                    hexString.append(hex);
+                }
+
+                String hashedPassword = hexString.toString();
+                customer.setPassword(hashedPassword);
+            } catch (NoSuchAlgorithmException e) {
+                throw new IllegalStateException(e);
+            }
+        } else
+            throw new PersonalExceptions("Пароль в CustomerData невалидный! Требования при создании пароля: минимальная длина - 8 символов, максимальная длина - 35 символов, сочетание больших и маленьких букв, наличие цифр и специальных символов, отсутствие последовательных повторений (например, 1111), последовательных дат (например, 2000), имени пользователя и других очевидных или личных данных.");
     }
 
     public void validateUsername(String username) throws PersonalExceptions {
-        if (username.length() >= 4 && username.length() <= 40) customer.setUsername(username);
-        else throw new PersonalExceptions("Логин в CustomerData невалидный! Длина логина должна быть от 4 символов и выше (предельно допустимое значение 40 символов).");
+        if (username.length() >= 4 && username.length() <= 40)
+            customer.setUsername(username);
+        else
+            throw new PersonalExceptions("Логин в CustomerData невалидный! Длина логина должна быть от 4 символов и выше (предельно допустимое значение 40 символов).");
     }
 }

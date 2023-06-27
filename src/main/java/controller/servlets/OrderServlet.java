@@ -7,11 +7,12 @@ import model.data.*;
 import model.exceptions.PersonalExceptions;
 
 import java.io.*;
+import java.security.SecureRandom;
 import java.util.*;
 
 public class OrderServlet extends HttpServlet {
 
-    private final Random rand = new Random();
+    private final SecureRandom rand = new SecureRandom();
 
     @Serial
     private static final long serialVersionUID = 1L;

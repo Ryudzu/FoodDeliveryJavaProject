@@ -2,16 +2,18 @@ package controller.services;
 
 import model.crud.CRUDutils;
 import model.data.CustomerData;
-import org.apache.commons.codec.digest.DigestUtils;
 
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationService implements Authentication, Serializable {
 
     private final List<CustomerData> customers = new ArrayList<>(CRUDutils.showAllCustomerData());
-    private CustomerData customer = null;
+    private transient CustomerData customer = null;
 
     @Override
     public boolean isUserExists(String username) {
@@ -50,7 +52,28 @@ public class AuthenticationService implements Authentication, Serializable {
 
     @Override
     public boolean isUserAuthorized(String username, String password) {
-        return CRUDutils.isCustomerExists(username, DigestUtils.md5Hex(password));
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-512");
+
+            byte[] passwordBytes = password.getBytes(StandardCharsets.UTF_8);
+            byte[] hashedBytes = md.digest(passwordBytes);
+
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+
+                if (hex.length() == 1)
+                    hexString.append('0');
+
+                hexString.append(hex);
+            }
+
+            String hashedPassword = hexString.toString();
+
+            return CRUDutils.isCustomerExists(username, hashedPassword);
+        } catch (NoSuchAlgorithmException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Override

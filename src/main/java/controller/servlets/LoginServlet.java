@@ -9,7 +9,7 @@ import java.io.*;
 
 public class LoginServlet extends HttpServlet {
 
-    private Authentication authService;
+    private transient Authentication authService;
 
     @Override
     public void init() {

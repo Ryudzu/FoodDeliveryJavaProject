@@ -16,17 +16,23 @@ public final class ProductAndOrderValidator {
     }
 
     public void validateAmountOrdered(int amountOrdered) throws PersonalExceptions {
-        if (amountOrdered >= 0 && amountOrdered <= 99) productAndOrder.setAmountOrdered(amountOrdered);
-        else throw new PersonalExceptions("Количество товаров в ProductAndOrder невалидно! Оно не может быть отрицательным или больше 99.");
+        if (amountOrdered >= 0 && amountOrdered <= 99)
+            productAndOrder.setAmountOrdered(amountOrdered);
+        else
+            throw new PersonalExceptions("Количество товаров в ProductAndOrder невалидно! Оно не может быть отрицательным или больше 99.");
     }
 
     public void validateOrderDataId(int orderDataId) throws PersonalExceptions {
-        if (orderDataId > 0) productAndOrder.setOrderDataId(orderDataId);
-        else throw new PersonalExceptions("ID заказа в ProductAndOrder невалидный! Он не может быть отрицательным или равным нулю.");
+        if (orderDataId > 0)
+            productAndOrder.setOrderDataId(orderDataId);
+        else
+            throw new PersonalExceptions("ID заказа в ProductAndOrder невалидный! Он не может быть отрицательным или равным нулю.");
     }
 
     public void validateProductDataId(int productDataId) throws PersonalExceptions {
-        if (productDataId > 0) productAndOrder.setProductDataId(productDataId);
-        else throw new PersonalExceptions("ID товара в ProductAndOrder невалидный! Он не может быть отрицательным или равным нулю.");
+        if (productDataId > 0)
+            productAndOrder.setProductDataId(productDataId);
+        else
+            throw new PersonalExceptions("ID товара в ProductAndOrder невалидный! Он не может быть отрицательным или равным нулю.");
     }
 }

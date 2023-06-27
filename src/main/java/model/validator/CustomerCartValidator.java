@@ -14,7 +14,9 @@ public final class CustomerCartValidator {
     }
 
     public void validateCustomerDataId(int customerDataId) throws PersonalExceptions {
-        if (customerDataId > 0) customerCart.setCustomerDataId(customerDataId);
-        else throw new PersonalExceptions("ID пользователя в CustomerCart невалидный! Он не может быть отрицательным или равным нулю.");
+        if (customerDataId > 0)
+            customerCart.setCustomerDataId(customerDataId);
+        else
+            throw new PersonalExceptions("ID пользователя в CustomerCart невалидный! Он не может быть отрицательным или равным нулю.");
     }
 }

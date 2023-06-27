@@ -10,7 +10,7 @@ import java.io.*;
 
 public class RegisterServlet extends HttpServlet {
 
-    private Authentication authService;
+    private transient Authentication authService;
 
     @Serial
     private static final long serialVersionUID = 1L;
