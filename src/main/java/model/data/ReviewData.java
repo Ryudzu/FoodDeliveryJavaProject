@@ -1,49 +1,14 @@
 package model.data;
 
-public class ReviewData {
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Getter
+@Setter
+public class ReviewData {
     private int id;
     private String comment;
     private int reviewRating;
-
-    public ReviewData() {}
-
-    public ReviewData(int id, String comment, int reviewRating) {
-        this.id = id;
-        this.comment = comment;
-        this.reviewRating = reviewRating;
-    }
-
-    @Override
-    public String toString() {
-        return "ReviewData{" +
-                "id=" + id +
-                ", comment='" + comment + '\'' +
-                ", reviewData=" + reviewRating +
-                '}';
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public int getReviewRating() {
-        return reviewRating;
-    }
-
-    public void setReviewRating(int reviewRating) {
-        this.reviewRating = reviewRating;
-    }
 }
