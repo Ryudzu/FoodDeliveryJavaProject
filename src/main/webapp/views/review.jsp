@@ -43,9 +43,9 @@
                                         <label for="comment"></label>
                                         <textarea class="form-control" id="comment" name="comment" rows="3" cols=""></textarea>
                                     </fieldset>
-                                    <button type="submit" class="btn btn-success">Отправить</button>
+                                    <button type="submit" class="btn btn-success btn-block" style="margin-bottom: 5px">Отправить</button>
                                 </form>
-                                <a href="<c:url value="/main" />" class="btn btn-secondary">На главную</a>
+                                <a href="<c:url value="/main" />" class="btn btn-secondary btn-block">На главную</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
